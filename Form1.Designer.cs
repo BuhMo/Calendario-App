@@ -25,7 +25,7 @@ partial class Form1{
     ///  the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent(){
-        //Inicializamos los elementos al forms
+        //Inicializamos los elementos.
         cbYears = new ComboBox();
         cbMonths = new ComboBox();
         cbDays = new ComboBox();
@@ -38,7 +38,7 @@ partial class Form1{
         btnSend = new Button();
         SuspendLayout();
 
-        //Propiedades de los elementos
+        //Agregamos las propiedades de los elementos.
         cbYears.FormattingEnabled = true;
         cbYears.Location = new Point(505, 209);
         cbYears.Name = "cbYears";
@@ -104,7 +104,7 @@ partial class Form1{
         btnSend.UseVisualStyleBackColor = true;
         btnSend.Click += btnSend_Click;
 
-        //Agregamos los elementos al form
+        //Agregamos los elementos al formulario.
         Controls.Add(cbYears);
         Controls.Add(cbMonths);
         Controls.Add(cbDays);
@@ -125,6 +125,7 @@ partial class Form1{
         PerformLayout();
     }
     
+    //Se crean globalmente los elementos.
     private ComboBox cbYears;
     private ComboBox cbMonths;
     private ComboBox cbDays;
