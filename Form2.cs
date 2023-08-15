@@ -52,13 +52,12 @@ namespace Calendar_App;
         return nombre;
     }
 
-    private void painting(int anno, int numMes, int mes, int dia, int ranDia, int resto, int totalMeses, Label label){
+    private void painting(int anno, int numMes, int mes, int dia, int ranDia, int resto, int contadorMes, int totalMeses, int ban, Label label){
         //Primero conocemos cuantos días tiene el mes a pintar y el día de la semana que tendrá el día en cuestión.
-        int n = diasMeses(mes, anno);
         int p = calcularPrimerDiaMes(dia, numMes, anno);
 
         //Verificamos con un if que la fecha está dentro del rango dado pór el usuario y saber si se pinta de gris o de colores bien aca.
-        if ((ranDia <= dia && numMes == mes ) || (numMes != totalMeses && numMes != mes) || (resto >= dia && numMes == totalMeses)) {
+        if ((ranDia <= dia && numMes == mes && ban == 0 ) || (contadorMes != totalMeses && numMes != mes) || (resto >= dia && contadorMes == totalMeses && numMes != mes)) {
             //Ahora, vemos en que día de la semana cae la fecha dada para saber de que color tiene que ir pintada.
             if ( p == 0 || p == 6){
                 label.BackColor = Color.FromArgb(247, 220, 111);
@@ -78,118 +77,152 @@ namespace Calendar_App;
         }
     }
 
-    private int cantidadMens(int cant){
-        int numAnno = cant / 365;
-        int numMes = 0;
-        if (numAnno != 0) {
-            for (int i = 1; 1 <= numAnno; i++) {
-                numMes += 12;
-            }
-        } else {
-            numMes = 12;
+    private int cantidadAnnios(int annio, int mes, int dia, int cant){
+        int diasRestantes = cant - (diasMeses(mes, annio) - dia + 1);
+        int annios = 0, cont=0, nAnnio = annio, month = mes;
+
+        if (mes == 12 && cant > 31){
+            month = 0;
         }
-        return numMes;
+            //Son más de un año. Ahora calculamos la cantidad de años que son
+        for (int i = month + 1; i <= 12; i++){
+            cont = diasMeses(i, nAnnio);
+            if (diasRestantes > cont){
+                diasRestantes -= cont;
+            } else {
+                annios++;
+                break;
+            }
+            if (i == 12 && diasRestantes > 0) {
+                month = 0;
+                i = 1;
+                nAnnio++;
+            }
+            
+        } 
+
+        return annios;
     }
 
     private List<FlowLayoutPanel> testCa(int anno, int mes, int dia, int cant){
         //Primero conocemos en que día de la semana comienza el mes y cuantos días tiene ese mes.
-        int primerDia = calcularPrimerDiaMes(1, mes, anno);
+        //int primerDia = calcularPrimerDiaMes(1, mes, anno);
         int diasXMes = diasMeses(mes, anno);
         //iniciamos un contador con los meses a mostras. Empezamos por defecto en uno.
-        int nMeses = 1;
+        int check = diasXMes - dia + 1 , diasRest = cant - check, cAnn =  cantidadAnnios(anno, mes, dia, cant), contMes = 1, month = mes;
+        int cont = 0, day = dia, ban = 0;
+        int[] listaResi = new int[13];
         List<FlowLayoutPanel> listSave = new List<FlowLayoutPanel>();
 
-        //Verificamos que tantos meses abarcara el calendario.
-        int check = diasXMes - dia + 1;
-        int diasRest = cant - check;
-        int cMes =  cantidadMens(cant);
-        int[] gh = new int[cMes];
-        gh[mes] = dia;
-        if(check < cant){
-            //Son más de un mes.
-            int cont = 0, h = diasRest;
-            for (int i = mes + 1; i <= cMes; i++){
-                cont = diasMeses(i, anno);
-                if (h > cont) {
-                    nMeses++;
-                    gh[nMeses+1]=cont;
-                    h = diasRest - cont;
-                } else {
-                    nMeses++;
-                    gh[nMeses+1]=h;
-                    break;
-                }
-            }
-        } else {
-            //Es Solo un mes. Prueba.
-            nMeses=1;
-        }
 
-        //For para crear la cantidad de paneles por meses solicitados por el usuario.
-        for (int i = 0; i < nMeses; i++){
-            //Creamos un FlowLayout como lienzo, o base, del calendario. Aunque los botones quedan fuera por 
-            //lo que redimencionarlo quedaría descartado(?).
-            FlowLayoutPanel flow1 = new FlowLayoutPanel();
-            flow1.Size = new Size(800, 300);
-            flow1.Location = new Point(0, 30);
-            flow1.BackColor = SystemColors.Control;
-
-            //Cramos un label que dirá el nombre y año del mes en cuestión.
-            Label labelMes = new Label();
-            labelMes.Text = nameMonth(i+mes) + " " + anno;
-            labelMes.TextAlign = ContentAlignment.MiddleCenter;
-            labelMes.Font = new Font("Arial", 16, FontStyle.Bold);
-            labelMes.Size = new Size(200, 40);  //Tamaño del label.
-            labelMes.Location = new Point(300, 2); //Ubicación del Label.
-            flow1.Controls.Add(labelMes);
-
-            //Creamos el Table Layout que contendra el calendario.
-            TableLayoutPanel baseCalendar = new TableLayoutPanel();
-            baseCalendar.Size = new Size(800, 300);
-            baseCalendar.Location = new Point(3, 60);
-            baseCalendar.RowCount = 7;
-            baseCalendar.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-
-            //Añadimos el tamaño que tendra cada fila por porcentaje.
-            for (int j = 0 ;j < 7;++j ){
-                baseCalendar.RowStyles.Add(new RowStyle (SizeType.Percent, 100f / 7));
-            }
-
-            //Añadimos las columnas
-            for(int col = 0; col <7 ; col++){
-                Label labelCol = new Label();
-                labelCol.Text = diasSemana[col];
-                labelCol.TextAlign = ContentAlignment.MiddleCenter;
-                labelCol.Dock = DockStyle.Fill;
-                labelCol.Font = new Font("Arial", 10, FontStyle.Bold);
-                baseCalendar.Controls.Add(labelCol , col, 0 );
-            }
-
-            //Agregamos los labels de los días al calendario y llamamos al método para pintarlos
-            int contador = 1;
-            int bDia = calcularPrimerDiaMes(1, i+mes, anno);
-            int bMes = diasMeses(i+mes, anno);
-            for (int row = 1; row < 7; row++) {
-                for (int col = 0; col < 7; col++) {
-                    if ((row == 1 && col < bDia) || contador > bMes) {
-                        baseCalendar.Controls.Add(new Label(), col, row);
-                    } else {
-                        Label nLabel = new Label();
-                        nLabel.Text = contador.ToString();
-                        nLabel.TextAlign = ContentAlignment.MiddleCenter;
-                        nLabel.Dock = DockStyle.Fill;
-                        nLabel.Margin = new Padding(2);
-                        painting(anno, i+mes,  mes, contador, dia, gh[mes+i], nMeses+1, nLabel);
-                        nLabel.BorderStyle = BorderStyle.FixedSingle;
-                        baseCalendar.Controls.Add(nLabel, col, row);
-                        contador++;
+        //For para crear la cantidad de paneles por meses y años solicitados por el usuario.
+        for (int nAnnios = 0; nAnnios < cAnn; nAnnios++){
+            listaResi[month] = day;
+            int nMeses = 1;
+            //Verificamos que tantos meses abarcara el calendario.
+            try {
+                if(check < cant){
+                    //Son más de un mes.
+                    for (int i = month + 1; i <= 12; i++){
+                        cont = diasMeses(i, anno+nAnnios);
+                        if (diasRest > cont) {
+                            nMeses++;
+                            listaResi[i]=cont;
+                            diasRest -= cont;
+                        } else {
+                            nMeses++;
+                            listaResi[i]=diasRest;
+                            //month = 1;
+                            //day = cont - diasRest + 1;
+                            break;
+                        }
                     }
+                } else {
+                    //Es Solo un mes. Prueba.
+                    nMeses=1;
+                    listaResi[month] = cant;
                 }
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
-            //Agregamos los dos paneles creados.
-            flow1.Controls.Add(baseCalendar);
-            Controls.Add(flow1);
-            listSave.Add(flow1);
+
+            for (int i = 0; i < nMeses; i++){
+                //Creamos un FlowLayout como lienzo, o base, del calendario. Aunque los botones quedan fuera por 
+                //lo que redimencionarlo quedaría descartado(?).
+                FlowLayoutPanel flow1 = new FlowLayoutPanel();
+                flow1.Size = new Size(800, 350);
+                flow1.Location = new Point(0, 30);
+                flow1.BackColor = SystemColors.Control;
+
+                //Cramos un label que dirá el nombre y año del mes en cuestión.
+                Label labelMes = new Label();
+                labelMes.Text = nameMonth(i+month) + " " + (anno+nAnnios);
+                labelMes.TextAlign = ContentAlignment.MiddleCenter;
+                labelMes.Font = new Font("Arial", 16, FontStyle.Bold);
+                labelMes.Size = new Size(200, 40);  //Tamaño del label.
+                labelMes.Location = new Point(300, 2); //Ubicación del Label.
+                flow1.Controls.Add(labelMes);
+
+                //Creamos el Table Layout que contendra el calendario.
+                TableLayoutPanel baseCalendar = new TableLayoutPanel();
+                baseCalendar.Size = new Size(800, 350);
+                baseCalendar.Location = new Point(3, 60);
+                baseCalendar.RowCount = 7;
+                baseCalendar.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+                //Añadimos el tamaño que tendra cada fila por porcentaje.
+                for (int j = 0 ;j < 7;++j ){
+                    baseCalendar.RowStyles.Add(new RowStyle (SizeType.AutoSize, 100f / 7));
+                }
+
+                //Añadimos las columnas
+                for(int col = 0; col <7 ; col++){
+                    Label labelCol = new Label();
+                    labelCol.Text = diasSemana[col];
+                    labelCol.TextAlign = ContentAlignment.MiddleCenter;
+                    labelCol.Dock = DockStyle.Fill;
+                    labelCol.Font = new Font("Arial", 10, FontStyle.Bold);
+                    baseCalendar.Controls.Add(labelCol , col, 0 );
+                }
+
+                //Agregamos los labels de los días al calendario y llamamos al método para pintarlos
+                int contador = 1;
+                int bDia = calcularPrimerDiaMes(1, i+mes, anno+nAnnios);
+                int bMes = diasMeses(i+mes, anno+nAnnios);
+                try {
+                    for (int row = 1; row < 7; row++) {
+                        for (int col = 0; col < 7; col++) {
+                            if ((row == 1 && col < bDia) || contador > bMes) {
+                                baseCalendar.Controls.Add(new Label(), col, row);
+                            } else {
+                                if (nMeses == 1 && cant < diasXMes && contador > cant){
+                                    ban = 1;
+                                }
+                                Label nLabel = new Label();
+                                nLabel.Text = contador.ToString();
+                                nLabel.TextAlign = ContentAlignment.MiddleCenter;
+                                nLabel.Dock = DockStyle.Fill;
+                                nLabel.Margin = new Padding(2);
+                                painting(anno+nAnnios, month+i, mes, contador, dia, listaResi[mes+i], contMes + i, nMeses, ban, nLabel);
+                                nLabel.BorderStyle = BorderStyle.FixedSingle;
+                                baseCalendar.Controls.Add(nLabel, col, row);
+                                contador++;
+                            }
+                        }
+                    }
+                } catch (Exception ex){
+                    //MessageBox.Show(ex.Message);
+                }
+                //Agregamos los dos paneles creados.
+                flow1.Controls.Add(baseCalendar);
+                Controls.Add(flow1);
+                listSave.Add(flow1);
+            }
+            if (month == 12 && check < cant){
+                month = 1;
+                day = 31;
+                diasRest -= day;
+            }
         }
         return listSave;
     }
