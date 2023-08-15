@@ -73,8 +73,7 @@ public partial class Form1 : Form{
     }
 
     private int diasNum(int anno, int mes, int dia, int cant) {
-        int anio = cant/365, cont = 0, nAnio, mN = diasMeses(mes, anno) - dia + 1, rest = cant - mN, nDias = rest;
-        
+        int anio = cant/365, cont = 0, nAnio =  anno, mN = diasMeses(mes, anno) - dia + 1, rest = cant - mN, nDias = rest, month = mes;
         
         if (anio > 0){
             for (int i = 0; i < anio; i++) {
@@ -85,11 +84,15 @@ public partial class Form1 : Form{
                 }
             }
         } else {
-            if (mes < 12) {
-                for (int i = mes + 1; i <= 12; i++) {
-                cont = diasMeses(i, anno);
+            if (mes == 12) {
+                month = 1;
+                nAnio ++;
+            } else {
+                month++;
+            }
+            for (int i = month; i <= 12; i++) {
+                cont = diasMeses(i, nAnio);
                 nDias += cont;
-                }
             }
         }
 
@@ -162,5 +165,10 @@ public partial class Form1 : Form{
 
     private void Form1_Load(object sender, EventArgs e){
         //Evento para cargar los paneles.
+    }
+
+    private void Form1_Closing(object sender, FormClosingEventArgs e)
+    {
+        Application.Exit();
     }
 }
