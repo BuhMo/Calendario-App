@@ -1,0 +1,14 @@
+E:\Soe\Desktop\Calendar_App\bin\Debug\net7.0-windows\Calendar_App.exe
+E:\Soe\Desktop\Calendar_App\bin\Debug\net7.0-windows\Calendar_App.deps.json
+E:\Soe\Desktop\Calendar_App\bin\Debug\net7.0-windows\Calendar_App.runtimeconfig.json
+E:\Soe\Desktop\Calendar_App\bin\Debug\net7.0-windows\Calendar_App.dll
+E:\Soe\Desktop\Calendar_App\bin\Debug\net7.0-windows\Calendar_App.pdb
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.GeneratedMSBuildEditorConfig.editorconfig
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.AssemblyInfoInputs.cache
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.AssemblyInfo.cs
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.csproj.CoreCompileInputs.cache
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.dll
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\refint\Calendar_App.dll
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.pdb
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\Calendar_App.genruntimeconfig.cache
+E:\Soe\Desktop\Calendar_App\obj\Debug\net7.0-windows\ref\Calendar_App.dll
