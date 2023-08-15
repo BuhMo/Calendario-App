@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj": {}
+    "e:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj": {}
   },
   "projects": {
-    "E:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj": {
+    "e:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj",
+        "projectUniqueName": "e:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj",
         "projectName": "Calendar_App",
-        "projectPath": "E:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj",
+        "projectPath": "e:\\Soe\\Desktop\\Calendar_App\\Calendar_App.csproj",
         "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "E:\\Soe\\Desktop\\Calendar_App\\obj\\",
+        "outputPath": "e:\\Soe\\Desktop\\Calendar_App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",

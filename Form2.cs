@@ -83,6 +83,7 @@ namespace Calendar_App;
 
         if (mes == 12 && cant > 31){
             month = 0;
+            annios = 1;
         }
             //Son más de un año. Ahora calculamos la cantidad de años que son
         for (int i = month + 1; i <= 12; i++){
@@ -139,11 +140,11 @@ namespace Calendar_App;
                     }
                 } else {
                     //Es Solo un mes. Prueba.
-                    nMeses=1;
+                    //nMeses=1;
                     listaResi[month] = cant;
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
 
             for (int i = 0; i < nMeses; i++){
@@ -187,8 +188,8 @@ namespace Calendar_App;
 
                 //Agregamos los labels de los días al calendario y llamamos al método para pintarlos
                 int contador = 1;
-                int bDia = calcularPrimerDiaMes(1, i+mes, anno+nAnnios);
-                int bMes = diasMeses(i+mes, anno+nAnnios);
+                int bDia = calcularPrimerDiaMes(1, i+month, anno+nAnnios);
+                int bMes = diasMeses(i+month, anno+nAnnios);
                 try {
                     for (int row = 1; row < 7; row++) {
                         for (int col = 0; col < 7; col++) {
@@ -203,7 +204,7 @@ namespace Calendar_App;
                                 nLabel.TextAlign = ContentAlignment.MiddleCenter;
                                 nLabel.Dock = DockStyle.Fill;
                                 nLabel.Margin = new Padding(2);
-                                painting(anno+nAnnios, month+i, mes, contador, dia, listaResi[mes+i], contMes + i, nMeses, ban, nLabel);
+                                painting(anno+nAnnios, month+i, mes, contador, dia, listaResi[month+i], contMes + i, nMeses, ban, nLabel);
                                 nLabel.BorderStyle = BorderStyle.FixedSingle;
                                 baseCalendar.Controls.Add(nLabel, col, row);
                                 contador++;
@@ -211,7 +212,7 @@ namespace Calendar_App;
                         }
                     }
                 } catch (Exception ex){
-                    //MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message);
                 }
                 //Agregamos los dos paneles creados.
                 flow1.Controls.Add(baseCalendar);
