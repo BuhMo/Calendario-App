@@ -83,7 +83,7 @@ namespace Calendar_App;
 
         if (mes == 12 && cant > 31){
             month = 0;
-            annios = 1;
+            annios++;
         }
             //Son más de un año. Ahora calculamos la cantidad de años que son
         for (int i = month + 1; i <= 12; i++){
@@ -98,6 +98,7 @@ namespace Calendar_App;
                 month = 0;
                 i = 1;
                 nAnnio++;
+                annios++;
             }
             
         } 
@@ -219,7 +220,7 @@ namespace Calendar_App;
                 Controls.Add(flow1);
                 listSave.Add(flow1);
             }
-            if (month == 12 && check < cant){
+            if ((month == 12 || cAnn > 1)&& check < cant){
                 month = 1;
                 day = 31;
                 diasRest -= day;
