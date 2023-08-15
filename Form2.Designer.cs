@@ -28,12 +28,12 @@ partial class Form2
     /// </summary>
     private void InitializeComponent()
     {
-        //inicializamos los elementos.
+        //Inicializamos los elementos.
         btnAnterior = new Button();
         btnSiguiente = new Button();
         btnAtras = new Button();
 
-        //Agregamos las propiedades a los elementos.
+        //Agregamos las propiedades de los elementos.
         btnAnterior.Location = new Point(602, 400);
         btnAnterior.Name = "btnAnterior";
         btnAnterior.BackColor = SystemColors.Control;
@@ -58,7 +58,7 @@ partial class Form2
         btnAtras.UseVisualStyleBackColor=true ;
         btnAtras.Click += btnAtras_Click;
 
-        //Agregamos a la vistalos elementos.
+        //Agregamos al formulario los elementos.
         Controls.Add(btnAnterior);
         Controls.Add(btnSiguiente);
         Controls.Add(btnAtras);
@@ -70,6 +70,7 @@ partial class Form2
         FormClosing += Form2_Closing;
     }
 
+    //Se crean los elementos globales.
     private Button btnAnterior;
     private Button btnSiguiente;
     private Button btnAtras;
